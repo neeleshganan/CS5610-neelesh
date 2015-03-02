@@ -3,3 +3,5 @@
 ../story/index.htm?../experiments/week02/week02.txt                     WEEK 02 - CSS and Responsive Pages
 ../story/index.htm?../experiments/week03/week03.txt                     WEEK 03 - Bootstrap and JavaScript
 ../story/index.htm?../experiments/week04/week04.txt                     WEEK 04 - jQuery and AJAX
+../story/index.htm?../experiments/week05/week05.txt                     WEEK 05 - Intro to Angular JS
+../story/index.htm?../experiments/week06/week06.txt                     WEEK 06 - AngularJS : CRUD
