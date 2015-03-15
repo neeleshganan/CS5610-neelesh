@@ -1,6 +1,6 @@
-../../story/whatisnext.htm?../experiments/week05/week05.txt                             WEEK 05 - Intro to AngularJS
-bind.html                                                	Binding Dynamic Input
-filter.html                                                 Filtering a List of Items
-diffbtn.html                                              	Identifying the Button Clicked
-selection.html                                              Select and Drop Courses
-multifilter.html                                            Filtering Data in a Table
+../../story/whatisnext.htm?../experiments/week07/week07.txt		WEEK 07 - Leave Request Application
+leave request 1.html			Basic Form
+leave request 2.html			Dependant Dropdown
+leave request 3.html			Input Validation
+leave request 4.html			Dynamic Input
+leave request 5.html			Form Summarization
