@@ -6,3 +6,4 @@
 ../story/index.htm?../experiments/week05/week05.txt                     WEEK 05 - Intro to Angular JS
 ../story/index.htm?../experiments/week06/week06.txt                     WEEK 06 - AngularJS : CRUD
 ../story/index.htm?../experiments/week07/week07.txt                     WEEK 07 - Leave Request Application
+../story/index.htm?../experiments/week08/week08.txt                     WEEK 08 - ng Routing
