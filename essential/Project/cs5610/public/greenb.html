@@ -1,0 +1,163 @@
+<html>
+<head>
+    <title>CS5610 - MBTA</title>
+    <script src="js/angular.min.js"></script>
+    <script src="js/GreenB.js"></script>
+    <script src="js/jquery-1.11.2.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="css/bootstrap.min.css" />
+    <link rel="stylesheet" href="css/MBTA-CSS.css" />
+</head>
+<body>
+<div class="container" ng-app="GreenBApp" ng-controller="GreenBCtrl">
+<nav class="navbar navbar-default nav-justified navbar-nav navbar-fixed-top" style="background-color:#2e8b57; border-color:#2e8b57">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>      
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <form class="navbar-form" role="Submit">
+      <ul class="nav navbar-nav nav-justified large">
+        <li><a href="/blue">Blue</a></li>
+        <li class="active dropdown">
+          <a class="dropdown-toggle navtext" data-toggle="dropdown" role="button" aria-expanded="false">Green<span class="caret"></span></a>
+          <ul class="dropdown-menu" role="menu">
+            <li><a href="/greenb">Green - B</a></li>
+            <li><a href="/greenc">Green - C</a></li>
+            <li><a href="/greend">Green - D</a></li>
+            <li><a href="/greene">Green - E</a></li>
+          </ul>
+        </li>
+        <li><a href="/orange" class="navtext">Orange</a></li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Red<span class="caret"></span></a>
+          <ul class="dropdown-menu" role="menu">
+            <li><a href="/ashmont">Ashmont</a></li>
+            <li><a href="/braintree">Braintree</a></li>            
+          </ul>
+        </li>
+        <li><a href="/">SignUp</a></li>
+        <li>
+        <div class="input-group">
+            <span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span>
+            <input type="text" class="form-control" placeholder="Username" />
+        </div>
+        </li>
+        <li class="listbox">
+        <div class="input-group">
+            <span class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></span>
+            <input type="password" class="form-control" placeholder="Password" />
+        </div>
+        </li>
+        <li style="padding:5px">
+        <button type="submit" class="btn btn-default">Sign In</button>
+        </li>        
+      </ul>
+            </form>
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
+        <video autoplay loop muted poster="rainbow.jpg" id="bgvid">
+            <source src="homevideo.mp4" type="video/mp4">
+        </video>
+        <br /><br /><br /><br />
+        <div class="row">
+            <div class="col-sm-5" style="padding: 20px">
+                <div class="input-group">
+                    <span class="input-group-addon"><span class="glyphicon glyphicon-home"></span></span>
+                        <input list="FromStation" name="FromStation" class="form-control" ng-model="FromStation">
+                          <datalist id="FromStation">
+                            <option value="Boston College">
+                            <option value="South Street">
+                            <option value="Chestnut Hill Avenue">
+                            <option value="Chiswick Road">
+                            <option value="Sutherland Road">
+                            <option value="Washington Street">
+                            <option value="Warren Street">
+                            <option value="Allston Street">
+                            <option value="Griggs Street">
+                            <option value="Harvard Avenue">
+                            <option value="Packards Corner">
+                            <option value="Babcock Street">
+                            <option value="Pleasant Street">
+                            <option value="Saint Paul Street">
+                            <option value="Boston Univ West">
+                            <option value="Boston Univ Central">
+                            <option value="Boston Univ East">
+                            <option value="Blandford Street">
+                            <option value="Kenmore">
+                            <option value="Hynes">
+                            <option value="Copley">
+                            <option value="Arlington">
+                            <option value="Boylston">
+                            <option value="Park Street">
+                          </datalist>
+                </div>
+            </div>
+            <div class="col-sm-5" style="padding: 20px">
+                <div class="input-group">
+                    <span class="input-group-addon"><span class="glyphicon glyphicon-map-marker"></span></span>
+                        <input list="ToStation" name="ToStation" class="form-control" ng-model="ToStation">
+                          <datalist id="ToStation">
+                            <option value="Boston College">
+                            <option value="South Street">
+                            <option value="Chestnut Hill Avenue">
+                            <option value="Chiswick Road">
+                            <option value="Sutherland Road">
+                            <option value="Washington Street">
+                            <option value="Warren Street">
+                            <option value="Allston Street">
+                            <option value="Griggs Street">
+                            <option value="Harvard Avenue">
+                            <option value="Packards Corner">
+                            <option value="Babcock Street">
+                            <option value="Pleasant Street">
+                            <option value="Saint Paul Street">
+                            <option value="Boston Univ West">
+                            <option value="Boston Univ Central">
+                            <option value="Boston Univ East">
+                            <option value="Blandford Street">
+                            <option value="Kenmore">
+                            <option value="Hynes">
+                            <option value="Copley">
+                            <option value="Arlington">
+                            <option value="Boylston">
+                            <option value="Park Street">
+                          </datalist>
+                </div>
+            </div>
+            <div class="col-sm-2" style="padding: 20px">
+                <button class="btn btn-success" ng-click="searchfn()">Search</button>
+            </div>
+        </div>
+        <div ng-show="validsearch" class="container">
+            <div class="row">
+                <div class="col-sm-5" style="padding: 20px">
+                <div class=" backdiv-green">
+                    <br /><br />
+                    Departs from <br /><span class="glyphicon glyphicon-home"></span>
+                    <span class="large"> {{FromStationjs}} </span>at <br />
+                    <span class="glyphicon glyphicon-time"></span><span class="large-i">{{FromTime}}</span><br /><br /><br />
+                    Reaches <br /><span class="glyphicon glyphicon-map-marker"></span>
+                    <span class="large"> {{ToStationjs}}</span> at <br />
+                    <span class="glyphicon glyphicon-time"></span><span class="large-i">{{ToTime}}</span><br /><br /><br />
+                    <button class="btn btn-default" disabled><span class="glyphicon glyphicon-time"></span><span class="large-i">{{TimeDiff}}</span></button>
+                    </div>
+                </div>
+                <div class="col-sm-5" style="padding: 20px">
+                    <iframe ng-src="{{trustSrc(MapsURL)}}" border-radius:10px width="100%" height="400" frameborder="0"></iframe>
+                </div>
+                <div class="col-sm-2">&nbsp;</div>
+            </div>
+        </div>
+</div>
+</body>
+</html>

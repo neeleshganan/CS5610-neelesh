@@ -1,0 +1,321 @@
+stop name
+stop id
+route id for each stop (routes by stop)
+direction???
+schedulebyroute
+
+
+var RedSchema = new mongoose.Schema({ StopID: String, StopName: String, StopLatitude: String, StopLongitude: String }, { collection: "RedModel" });
+var RedModel = mongoose.model("RedModel", RedSchema);
+
+
+/*
+form1 = new RedModel({ StopID: "70061", StopName: "Alewife", StopLatitude: "42.3954277038574", StopLongitude: "-71.1424865722656" });
+form1.save(function (err) {
+    if (err)
+        console.log("---------------there is an error----------");
+    else console.log("Saved into DB");
+});
+
+form1 = new RedModel({ StopID: "70063", StopName: "Davis", StopLatitude: "42.3967399597168", StopLongitude: "-71.1218185424805" });
+form1.save(function (err) {
+    if (err)
+        console.log(err);
+    else console.log("Saved into DB");
+});
+form1 = new RedModel({ StopID: "70065", StopName: "Porter", StopLatitude: "42.3884010314941", StopLongitude: "-71.1191482543945" });
+form1.save(function (err) {
+    if (err)
+        console.log(err);
+    else console.log("Saved into DB");
+});
+form1 = new RedModel({ StopID: "70067", StopName: "Harvard", StopLatitude: "42.373363494873", StopLongitude: "-71.1189575195313" });
+form1.save(function (err) {
+    if (err)
+        console.log(err);
+    else console.log("Saved into DB");
+});
+form1 = new RedModel({ StopID: "70069", StopName: "Central", StopLatitude: "42.3654861450195", StopLongitude: "-71.1038055419922" });
+form1.save(function (err) {
+    if (err)
+        console.log(err);
+    else console.log("Saved into DB");
+});
+form1 = new RedModel({ StopID: "70071", StopName: "Kendall/MIT", StopLatitude: "42.362491607666", StopLongitude: "-71.0861740112305" });
+form1.save(function (err) {
+    if (err)
+        console.log(err);
+    else console.log("Saved into DB");
+});
+form1 = new RedModel({ StopID: "70073", StopName: "Charles/MGH", StopLatitude: "42.3611640930176", StopLongitude: "-71.0706253051758" });
+form1.save(function (err) {
+    if (err)
+        console.log(err);
+    else console.log("Saved into DB");
+});
+form1 = new RedModel({ StopID: "70075", StopName: "Park Street", StopLatitude: "42.3563957214355", StopLongitude: "-71.0624237060547" });
+form1.save(function (err) {
+    if (err)
+        console.log(err);
+    else console.log("Saved into DB");
+});
+form1 = new RedModel({ StopID: "70077", StopName: "Downtown Crossing", StopLatitude: "42.3555183410645", StopLongitude: "-71.0602264404297" });
+form1.save(function (err) {
+    if (err)
+        console.log(err);
+    else console.log("Saved into DB");
+});
+form1 = new RedModel({ StopID: "70079", StopName: "South Station", StopLatitude: "42.3522720336914", StopLongitude: "-71.0552444458008" });
+form1.save(function (err) {
+    if (err)
+        console.log(err);
+    else console.log("Saved into DB");
+});
+form1 = new RedModel({ StopID: "70081", StopName: "Broadway", StopLatitude: "42.3426208496094", StopLongitude: "-71.0569686889648" });
+form1.save(function (err) {
+    if (err)
+        console.log(err);
+    else console.log("Saved into DB");
+});
+form1 = new RedModel({ StopID: "70083", StopName: "Andrew", StopLatitude: "42.3301544189453", StopLongitude: "-71.0576553344727" });
+form1.save(function (err) {
+    if (err)
+        console.log(err);
+    else console.log("Saved into DB");
+});
+form1 = new RedModel({ StopID: "70087", StopName: "Savin Hill", StopLatitude: "42.3112907409668", StopLongitude: "-71.0533294677734" });
+form1.save(function (err) {
+    if (err)
+        console.log(err);
+    else console.log("Saved into DB");
+});
+form1 = new RedModel({ StopID: "70089", StopName: "Fields Corner", StopLatitude: "42.3000946044922", StopLongitude: "-71.0616683959961" });
+form1.save(function (err) {
+    if (err)
+        console.log(err);
+    else console.log("Saved into DB");
+});
+form1 = new RedModel({ StopID: "70091", StopName: "Shawmut", StopLatitude: "42.2931251525879", StopLongitude: "-71.0657348632813" });
+form1.save(function (err) {
+    if (err)
+        console.log(err);
+    else console.log("Saved into DB");
+});
+form1 = new RedModel({ StopID: "70093", StopName: "Ashmont", StopLatitude: "42.2846527099609", StopLongitude: "-71.0644912719727" });
+form1.save(function (err) {
+    if (err)
+        console.log(err);
+    else console.log("Saved into DB");
+});
+form1 = new RedModel({ StopID: "70095", StopName: "JFK/UMass", StopLatitude: "42.320686340332", StopLongitude: "-71.0523910522461" });
+form1.save(function (err) {
+    if (err)
+        console.log(err);
+    else console.log("Saved into DB");
+});
+form1 = new RedModel({ StopID: "70097", StopName: "North Quincy", StopLatitude: "42.275276184082", StopLongitude: "-71.0295867919922" });
+form1.save(function (err) {
+    if (err)
+        console.log(err);
+    else console.log("Saved into DB");
+});
+form1 = new RedModel({ StopID: "70099", StopName: "Wollaston", StopLatitude: "42.2665138244629", StopLongitude: "-71.0203399658203" });
+form1.save(function (err) {
+    if (err)
+        console.log(err);
+    else console.log("Saved into DB");
+});
+form1 = new RedModel({ StopID: "70101", StopName: "Quincy Center", StopLatitude: "42.2518081665039", StopLongitude: "-71.0054092407227" });
+form1.save(function (err) {
+    if (err)
+        console.log(err);
+    else console.log("Saved into DB");
+});
+form1 = new RedModel({ StopID: "70103", StopName: "Quincy Adams", StopLatitude: "42.2333908081055", StopLongitude: "-71.0071563720703" });
+form1.save(function (err) {
+    if (err)
+        console.log(err);
+    else console.log("Saved into DB");
+});
+form1 = new RedModel({ StopID: "70105", StopName: "Braintree", StopLatitude: "42.2078552246094", StopLongitude: "-71.0011367797852" });
+form1.save(function (err) {
+    if (err)
+        console.log(err);
+    else console.log("Saved into DB");
+});
+*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+form1 = new GreenEModel({ StopID: "70210", StopName: "Lechmere", StopLatitude: "42.3707733154297", StopLongitude: "-71.0765380859375" });
+form1.save(function (err) {
+    if (err)
+        console.log("---------------there is an error----------");
+    else console.log("Saved into DB - GreenE start");
+});
+
+form1 = new GreenEModel({ StopID: "70208", StopName: "Science Park", StopLatitude: "42.3666648864746", StopLongitude: "-71.0676651000977" });
+form1.save(function (err) {
+    if (err)
+        console.log(err);
+    else console.log("Saved into DB");
+});
+form1 = new GreenEModel({ StopID: "70206", StopName: "North Station", StopLatitude: "42.3655776977539", StopLongitude: "-71.0612869262695" });
+form1.save(function (err) {
+    if (err)
+        console.log(err);
+    else console.log("Saved into DB");
+});
+form1 = new GreenEModel({ StopID: "70204", StopName: "Haymarket", StopLatitude: "42.3630218505859", StopLongitude: "-71.0582885742188" });
+form1.save(function (err) {
+    if (err)
+        console.log(err);
+    else console.log("Saved into DB");
+});
+form1 = new GreenEModel({ StopID: "70199", StopName: "Park Street", StopLatitude: "42.3563957214355", StopLongitude: "-71.0624237060547" });
+form1.save(function (err) {
+    if (err)
+        console.log(err);
+    else console.log("Saved into DB");
+});
+form1 = new GreenEModel({ StopID: "70159", StopName: "Boylston", StopLatitude: "42.3530197143555", StopLongitude: "-71.0645904541016" });
+form1.save(function (err) {
+    if (err)
+        console.log(err);
+    else console.log("Saved into DB");
+});
+form1 = new GreenEModel({ StopID: "70157", StopName: "Arlington", StopLatitude: "42.3519020080566", StopLongitude: "-71.0708923339844" });
+form1.save(function (err) {
+    if (err)
+        console.log(err);
+    else console.log("Saved into DB");
+});
+form1 = new GreenEModel({ StopID: "70155", StopName: "Copley", StopLatitude: "42.3499755859375", StopLongitude: "-71.0774459838867" });
+form1.save(function (err) {
+    if (err)
+        console.log(err);
+    else console.log("Saved into DB");
+});
+form1 = new GreenEModel({ StopID: "70239", StopName: "Prudential", StopLatitude: "42.3455696105957", StopLongitude: "-71.0816955566406" });
+form1.save(function (err) {
+    if (err)
+        console.log(err);
+    else console.log("Saved into DB");
+});
+form1 = new GreenEModel({ StopID: "70241", StopName: "Symphony", StopLatitude: "42.3426856994629", StopLongitude: "-71.0850524902344" });
+form1.save(function (err) {
+    if (err)
+        console.log(err);
+    else console.log("Saved into DB");
+});
+form1 = new GreenEModel({ StopID: "70243", StopName: "Northeastern University", StopLatitude: "42.3404006958008", StopLongitude: "-71.0888061523438" });
+form1.save(function (err) {
+    if (err)
+        console.log(err);
+    else console.log("Saved into DB");
+});
+form1 = new GreenEModel({ StopID: "70245", StopName: "Museum of Fine Arts", StopLatitude: "42.3377113342285", StopLongitude: "-71.0955123901367" });
+form1.save(function (err) {
+    if (err)
+        console.log(err);
+    else console.log("Saved into DB");
+});
+form1 = new GreenEModel({ StopID: "70247", StopName: "Longwood Medical Area", StopLatitude: "42.3359603881836", StopLongitude: "-71.1000518798828" });
+form1.save(function (err) {
+    if (err)
+        console.log(err);
+    else console.log("Saved into DB");
+});
+form1 = new GreenEModel({ StopID: "70249", StopName: "Brigham Circle", StopLatitude: "42.334228515625", StopLongitude: "-71.104606628418" });
+form1.save(function (err) {
+    if (err)
+        console.log(err);
+    else console.log("Saved into DB");
+});
+form1 = new GreenEModel({ StopID: "70251", StopName: "Fenwood Road", StopLatitude: "42.3337059020996", StopLongitude: "-71.1057281494141" });
+form1.save(function (err) {
+    if (err)
+        console.log(err);
+    else console.log("Saved into DB");
+});
+form1 = new GreenEModel({ StopID: "70253", StopName: "Mission Park", StopLatitude: "42.333194732666", StopLongitude: "-71.1097564697266" });
+form1.save(function (err) {
+    if (err)
+        console.log(err);
+    else console.log("Saved into DB");
+});
+form1 = new GreenEModel({ StopID: "70255", StopName: "Riverway", StopLatitude: "42.3316841125488", StopLongitude: "-71.111930847168" });
+form1.save(function (err) {
+    if (err)
+        console.log(err);
+    else console.log("Saved into DB");
+});
+form1 = new GreenEModel({ StopID: "70257", StopName: "Back of the Hill", StopLatitude: "42.3301391601563", StopLongitude: "-71.1113128662109" });
+form1.save(function (err) {
+    if (err)
+        console.log(err);
+    else console.log("Saved into DB");
+});
+form1 = new GreenEModel({ StopID: "70260", StopName: "Heath Street", StopLatitude: "42.3286819458008", StopLongitude: "-71.1105575561523" });
+form1.save(function (err) {
+    if (err)
+        console.log(err);
+    else console.log("Saved into DB - GreenE end");
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+app.get('/red', function (req, res) {
+    res.sendfile('public/red.html');
+});
+
+
+app.get('/redstations/:name', function (req, res) {
+    RedModel.find({ StopName: req.params.name }, function (err, response) {
+        console.log("Parameter sent : " + req.params.name);
+        console.log("in find by name function");
+        console.log(response);
+        res.send(response[0]);
+    });
+});
+
+
+app.get('/redstations', function (req, res) {
+    RedModel.find(function (err, response) {
+        console.log("in function");
+        res.send(response);
+    });
+});
