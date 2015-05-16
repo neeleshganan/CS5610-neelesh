@@ -1,74 +1,3 @@
-<html>
-<head>
-    <title>CS5610 - MBTA</title>
-    <script src="js/angular.min.js"></script>
-    <script src="js/OrangeLine.js"></script>
-    <script src="js/jquery-1.11.2.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="css/bootstrap.min.css" />
-    <link rel="stylesheet" href="css/MBTA-CSS.css" />
-</head>
-<body>
-<div class="container" ng-app="OrangeApp" ng-controller="OrangeCtrl">
-<nav class="navbar navbar-default nav-justified navbar-nav navbar-fixed-top" style="background-color:#cc6600; border-color:#cc6600">
-  <div class="container-fluid">
-    <!-- Brand and toggle get grouped for better mobile display -->
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>      
-    </div>
-
-    <!-- Collect the nav links, forms, and other content for toggling -->
-    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-            <form class="navbar-form" role="Submit">
-      <ul class="nav navbar-nav nav-justified large">
-        <li><a href="/blue">Blue</a></li>
-        <li class="dropdown">
-          <a class="dropdown-toggle navtext" data-toggle="dropdown" role="button" aria-expanded="false">Green<span class="caret"></span></a>
-          <ul class="dropdown-menu" role="menu">
-            <li><a href="/greenb">Green - B</a></li>
-            <li><a href="/greenc">Green - C</a></li>
-            <li><a href="/greend">Green - D</a></li>
-            <li><a href="/greene">Green - E</a></li>
-          </ul>
-        </li>
-        <li class="active"><a href="/orange" class="navtext">Orange</a></li>
-        <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Red<span class="caret"></span></a>
-          <ul class="dropdown-menu" role="menu">
-            <li><a href="/ashmont">Ashmont</a></li>
-            <li><a href="/braintree">Braintree</a></li>            
-          </ul>
-        </li>
-        <li><a href="/">SignUp</a></li>
-        <li>
-        <div class="input-group">
-            <span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span>
-            <input type="text" class="form-control" placeholder="Username" />
-        </div>
-        </li>
-        <li class="listbox">
-        <div class="input-group">
-            <span class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></span>
-            <input type="password" class="form-control" placeholder="Password" />
-        </div>
-        </li>
-        <li style="padding:5px">
-        <button type="submit" class="btn btn-default">Sign In</button>
-        </li>        
-      </ul>
-            </form>
-    </div><!-- /.navbar-collapse -->
-  </div><!-- /.container-fluid -->
-</nav>
-        <video autoplay loop muted poster="rainbow.jpg" id="bgvid">
-            <source src="homevideo.mp4" type="video/mp4">
-        </video>
-        <br /><br /><br /><br />
         <div class="row">
             <div class="col-sm-5" style="padding: 20px">
                 <div class="input-group">
@@ -146,11 +75,20 @@
                     </div>
                 </div>
                 <div class="col-sm-5" style="padding: 20px">
-                    <iframe ng-src="{{trustSrc(MapsURL)}}" border-radius:10px width="100%" height="400" frameborder="0"></iframe>
+                    <iframe ng-src="{{trustSrc(MapsURL)}}" border-radius="10" width="100%" height="400" frameborder="0"></iframe>
                 </div>
-                <div class="col-sm-2">&nbsp;</div>
+                <div class="col-sm-2" style="padding: 20px"><span ng-show="ActiveUser"><button class="btn btn-warning" ng-click="AddTrip()"><span class="glyphicon glyphicon-star"></span></button></span></div>
             </div>
         </div>
-</div>
-</body>
-</html>
+        <br /><hr /><br />
+        <div ng-show="FavOrangeTrips.length>0" class="container">
+            <div class=" backdiv-orange">
+                <br />
+                <h2>Your favourite routes in Orange Line</h2>
+                <ul>
+                <li ng-repeat="x in FavOrangeTrips track by $index">
+                {{x}}
+                </li>
+                </ul>
+            </div>
+        </div>

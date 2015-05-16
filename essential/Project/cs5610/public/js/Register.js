@@ -1,11 +1,10 @@
-function RegisterFn($scope, $http) {
-    alert("Apologies!!! The Register Login is not working properly. Please continue with rest of the application. i.e.\n\n Blue Line\n Green Line\n Orange Line\n Red Line");
-
+app.controller("RegisterCtrl", function ($scope, UserService, $http, $routeParams) {
+    console.log(" ####################### in register function");
+    $scope.flag = 0;
     $scope.usercheck = function () {
-        console.log("in user check fn");
         var usernamejs = $scope.usermodel;
         $http.get("/users/" + usernamejs).success(function (response) {
-            if (response.length > 0)
+            if (response)
                 $scope.usernameerr = "Username Already Exists!!!";
             else $scope.usernameerr = null;
         });
@@ -15,11 +14,12 @@ function RegisterFn($scope, $http) {
         console.log("in sign up fn");
         var userjs = { username: $scope.usermodel, name: $scope.namemodel, pass: $scope.passmodel };
         $http.post("/adduser/", userjs).success(function (response) {
-            $scope.activeuser = userjs;
-            window.location="http://localhost:3000/profile/userjs.username";
+            $scope.ActiveUser = userjs;
+            console.log("in add user function : " + $scope.ActiveUser);
+            $scope.flag = 1;
+            $scope.usermodel = "";
+            $scope.namemodel = "";
+            $scope.passmodel = "";
         });
     }
-
-}
-
-angular.module('RegisterApp', []).controller("RegisterCtrl", RegisterFn);
+})

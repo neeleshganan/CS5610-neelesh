@@ -4,6 +4,10 @@
     <link rel="stylesheet" href="../../css/week03/bootstrap-3.3.2-dist/css/bootstrap.min.css" />
     <script src="../../css/week05/angular.min.js"></script>
     <script src="../../css/week05/angular-route.js"></script>
+    <script src="js/AppConfig.js"></script>
+    <script src="js/LoginCtrl.js"></script>
+    <script src="js/ProfCtrl.js"></script>
+    <script src="js/UserService.js"></script>
 </head>
 <body>
     <div class="container jumbotron">
@@ -56,87 +60,5 @@
         </div>
         </form>
     </div>
-    <script>
-
-        var app = angular.module("LoginApp", ["ngRoute"]);
-
-        app.config(['$routeProvider', 
-        function ($routeProvider) {
-            console.log("in config");
-            $routeProvider.
-            when('/home', {
-                templateUrl: 'pages/home.html'
-            }).
-            when('/profile/:name', {
-                templateUrl: 'pages/profile.html',
-                controller: 'ProfCtrl'
-            }).
-            otherwise({
-                redirectTo: '/home'
-            });
-        } ]);
-
-        app.controller("ProfCtrl", function ($scope, UserService, $routeParams) {
-            console.log("in profile Contrl");
-            $scope.user = UserService.getUser();
-        });
-
-        app.controller("LoginCtrl", function ($scope, UserService) {
-            console.log("in Login Contrl");
-            $scope.user = null;
-            $scope.validate = function () {
-                var username = $scope.emailmodel;
-                var password = $scope.passmodel;
-                console.log("in validate");
-                $scope.user = UserService.validate(username, password);
-                console.log("after validate");
-                console.log($scope.user);
-            }
-
-            $scope.logoutFn = function () {
-                $scope.user = null;
-                $scope.passmodel = null;
-                $scope.emailmodel = null;
-                UserService.logoutFn();
-            }
-        });
-
-
-        app.factory("UserService", function () {
-            var logins = [{ mail: "neelesh1@gmail.com", pass: "password", name: "Neelesh1", player: "Messi" },
-                          { mail: "neelesh2@gmail.com", pass: "password", name: "Neelesh2", player: "Suarez" },
-                          { mail: "neelesh3@gmail.com", pass: "password", name: "Neelesh3", player: "Neymar"}];
-
-            var user = null;
-            console.log("in factory");
-
-            var validate = function (username, password) {
-                console.log("in userservice validate");
-                var flag = 0;
-                for (var i = 0; i < logins.length; i++) {
-                    if (username == logins[i].mail && password == logins[i].pass) {
-                        user = logins[i];
-                        return user;
-                    }
-                }
-                return null;
-            }
-
-            var logoutFn = function () {
-                user = null;
-            }
-
-            var getUser = function () {
-                return user;
-            }
-
-            return {
-                validate: validate,
-                logoutFn: logoutFn,
-                getUser: getUser
-            }
-        });
-
-    </script>
 </body>
 </html>

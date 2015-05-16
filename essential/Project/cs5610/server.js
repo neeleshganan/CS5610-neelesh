@@ -2,7 +2,6 @@ var express = require('express');
 var app = express();
 var bodyParser = require('body-parser');
 var multer = require('multer');
-
 var ip = process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1';
 var port = process.env.OPENSHIFT_NODEJS_PORT || 3000;
 
@@ -15,6 +14,7 @@ var mongoose = require('mongoose');
 mongoose.connect(process.env.OPENSHIFT_MONGODB_DB_URL || 'mongodb://localhost/test' || 'mongodb://$OPENSHIFT_MONGODB_DB_HOST:$OPENSHIFT_MONGODB_DB_PORT/');
 
 var form1;
+var ActiveUser=null;
 
 var BlueSchema = new mongoose.Schema({ StopID: String, StopName: String, StopLatitude: String, StopLongitude: String }, { collection: "BlueModel" });
 var BlueModel = mongoose.model("BlueModel", BlueSchema);
@@ -50,9 +50,11 @@ var GreenEModel = mongoose.model("GreenEModel", GreenESchema);
 var TripSchema = new mongoose.Schema({ Start: String, Stop: String, Line: String }, { collection: "TripModel" });
 var TripModel = mongoose.model("TripModel", TripSchema);
 
-var UserSchema = new mongoose.Schema({ Username: String, Name: String, Pass: String, Trips: [TripSchema] }, { collection: "UserModel" });
+var UserSchema = new mongoose.Schema({ Username: String, Name: String, Pass: String, Trips: [TripModel] }, { collection: "UserModel" });
 var UserModel = mongoose.model("UserModel", UserSchema);
 
+var AlertSchema = new mongoose.Schema({ Name: String, Alert: String }, { collection: "AlertModel" });
+var AlertModel = mongoose.model("AlertModel", AlertSchema);
 
 
 
@@ -62,36 +64,120 @@ app.get('/', function (req, res) {
 });
 
 
+app.get('/register', function (req, res) {
+    res.sendfile('public/register.html');
+});
+
 
 app.post('/adduser/', function (req, res) {
+    ActiveUser = req.body;
+    console.log("Active user in add user : " + req.body);
+    console.log("Active name in add user : " + req.body.name);
     form1 = new UserModel({ Username: req.body.username, Name: req.body.name, Pass: req.body.pass, Trips: [] });
-    form1.save(function (err) {
+    form1.save(function (err, user) {
         if (err)
             console.log("---------------there is an error----------");
-        else console.log("Saved into DB");
+        else {
+            res.send(ActiveUser);
+        }
     });
 });
 
 
 app.get('/users/:name', function (req, res) {
-    GreenEModel.find({ Username: req.params.name }, function (err, response) {
-        console.log("Parameter sent : " + req.params.name);
-        console.log(response);
+    UserModel.find({ Username: req.params.name }, function (err, response) {
         res.send(response[0]);
     });
 });
 
 
-app.get('/profile/:name', function (req, res) {
+app.get('/users', function (req, res) {
+    UserModel.find(function (err, response) {
+        res.send(response);
+    });
+});
+
+
+app.get('/useralerts', function (req, res) {
+    AlertModel.find(function (err, response) {
+        res.send(response);
+    });
+});
+
+
+app.post('/postalert/', function (req, res) {
+    form1 = new AlertModel({ Name: req.body.Name, Alert: req.body.Alert });
+    form1.save(function (err, alert) {
+        if (err)
+            console.log("---------------there is a post alert error----------");
+        else {
+            res.send(alert);
+        }
+    });
+});
+
+
+app.get('/profile', function (req, res) {
     res.sendfile('public/profile.html');
 });
 
 
+app.post('/setuser/', function (req, res) {
+    console.log("set user : " + req.body);
+    ActiveUser = req.body;
+    console.log("Active User in set user : " + ActiveUser);
+    res.send(ActiveUser);
+});
+
+
+app.get('/nulluser', function (req, res) {
+    ActiveUser = null;
+    res.send(ActiveUser);
+});
+
+
+app.get('/getuser', function (req, res) {
+    res.send(ActiveUser);
+});
 
 
 
+app.post('/addtrip/:name', function (req, res) {
+    console.log("in post addtrip");
+/*    console.log("Active name in add user : " + req.params.name);
+    console.log("Active user in add trip : " + req.body);
+    console.log("all trips in add trip : " + req.body.Trips);
+    console.log("first trip in add trip : " + req.body.Trips[0].Line); */
+    form1 = new TripModel({ Start: req.body.Start, Stop: req.body.Stop, Line: req.body.Line });
+    form1.save(function (err) {
+        if (err)
+            console.log(err);
+        else console.log("Saved into DB");
+    });
+    UserModel.update({ Username: req.params.name },
+    { Username: ActiveUser.Username,
+      Name: ActiveUser.Name,
+      Pass: ActiveUser.Pass,
+      Trips: ActiveUser.Trips.push(form1)
+    },
+    { upsert : true }, 
+    function (err, response) {
+        console.log("Response in Add Trip : %j", response);
+        console.log("ActiveUser in Add Trip : %j", ActiveUser);
+        res.send(ActiveUser);
+    });
+});
 
 
+app.get('/users/:name', function (req, res) {
+    UserModel.find({ Username: req.params.name }, function (err, response) {
+        res.send(response[0]);
+    });
+});
+
+
+
+/*
 form1 = new BlueModel({StopID: "70038", StopName: "Bowdoin", StopLatitude: "42.3613662719727", StopLongitude: "-71.0620346069336"});
 form1.save(function (err) {
 if (err)
@@ -1187,7 +1273,7 @@ form1.save(function (err) {
         console.log(err);
     else console.log("Saved into DB - GreenB end");
 });
-
+*/
 
 
 
@@ -1219,9 +1305,6 @@ app.get('/blue', function (req, res) {
 
 app.get('/bluestations/:name', function (req, res) {
     BlueModel.find({ StopName: req.params.name }, function (err, response) {
-        console.log("Parameter sent : " + req.params.name);
-        console.log("in find by name function");
-        console.log(response);
         res.send(response[0]);
     });
 });
@@ -1243,9 +1326,6 @@ app.get('/orange', function (req, res) {
 
 app.get('/orangestations/:name', function (req, res) {
     OrangeModel.find({ StopName: req.params.name }, function (err, response) {
-        console.log("Parameter sent : " + req.params.name);
-        console.log("in find by name function");
-        console.log(response);
         res.send(response[0]);
     });
 });
@@ -1271,9 +1351,6 @@ app.get('/ashmont', function (req, res) {
 
 app.get('/ashmontstations/:name', function (req, res) {
     AshmontModel.find({ StopName: req.params.name }, function (err, response) {
-        console.log("Parameter sent : " + req.params.name);
-        console.log("in find by name function");
-        console.log(response);
         res.send(response[0]);
     });
 });
@@ -1300,9 +1377,6 @@ app.get('/braintree', function (req, res) {
 
 app.get('/braintreestations/:name', function (req, res) {
     BraintreeModel.find({ StopName: req.params.name }, function (err, response) {
-        console.log("Parameter sent : " + req.params.name);
-        console.log("in find by name function");
-        console.log(response);
         res.send(response[0]);
     });
 });
@@ -1325,9 +1399,6 @@ app.get('/greenb', function (req, res) {
 
 app.get('/greenbstations/:name', function (req, res) {
     GreenBModel.find({ StopName: req.params.name }, function (err, response) {
-        console.log("Parameter sent : " + req.params.name);
-        console.log("in find by name function");
-        console.log(response);
         res.send(response[0]);
     });
 });
@@ -1351,9 +1422,6 @@ app.get('/greenc', function (req, res) {
 
 app.get('/greencstations/:name', function (req, res) {
     GreenCModel.find({ StopName: req.params.name }, function (err, response) {
-        console.log("Parameter sent : " + req.params.name);
-        console.log("in find by name function");
-        console.log(response);
         res.send(response[0]);
     });
 });
@@ -1377,9 +1445,6 @@ app.get('/greend', function (req, res) {
 
 app.get('/greendstations/:name', function (req, res) {
     GreenDModel.find({ StopName: req.params.name }, function (err, response) {
-        console.log("Parameter sent : " + req.params.name);
-        console.log("in find by name function");
-        console.log(response);
         res.send(response[0]);
     });
 });
@@ -1403,9 +1468,6 @@ app.get('/greene', function (req, res) {
 
 app.get('/greenestations/:name', function (req, res) {
     GreenEModel.find({ StopName: req.params.name }, function (err, response) {
-        console.log("Parameter sent : " + req.params.name);
-        console.log("in find by name function");
-        console.log(response);
         res.send(response[0]);
     });
 });

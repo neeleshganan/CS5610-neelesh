@@ -1,32 +1,24 @@
-app.factory("UserService", function () {
-    var ActiveUser = null;
+app.factory("UserService", function ($http) {
     console.log("in factory");
-
-    var validate = function (username, password) {
+    var ActiveUser;
+    
+    var validate = function (username, password, logins) {
         console.log("in userservice validate");
-        var flag = 0;
-
-        $http.get("/users").success(function (response) {
-            console.log(" Response ::::::::::::::::: " + response);
-            logins = response;
-
-            for (var i = 0; i < logins.length; i++) {
-                if (username == logins[i].mail && password == logins[i].pass) {
-                    ActiveUser = logins[i];
-                    return ActiveUser;
-                }
+        for (var i = 0; i < logins.length; i++) {
+            if (username == logins[i].Username && password == logins[i].Pass) {
+                ActiveUser = logins[i];
+                return ActiveUser;
             }
-            return null;
-        });
+        }
+        return null;
     }
 
     var logoutFn = function () {
         ActiveUser = null;
-        window.location = "index.html";
     }
 
     var getUser = function () {
-        return ActiveUser;
+            return ActiveUser;
     }
 
     return {

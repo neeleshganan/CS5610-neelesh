@@ -95,7 +95,7 @@
                     <h4>Documentation</h4>
                 </div>
                 <div class="col-sm-4">
-                    <a href="Project/documentation.html" target="_blank">
+                    <a href="https://youtu.be/SVxdvsV0rXc" target="_blank">
                         <img src="css/page/youtube.png" class="img-circle" alt="Project" width="200" height="200">
                     </a>
                     <h4>Demo Video</h4>
@@ -114,7 +114,7 @@
             <div class="row">
                 <div class="col-sm-2">
                     &nbsp;</div>
-                <div class="col-md-3">
+                <div class="col-sm-3">
                     <a href="story/index.htm?../Experiments/story.txt" target="_blank">
                         <img src="css/page/experiments.png" class="img-circle" alt="Project" width="200"
                             height="200">
